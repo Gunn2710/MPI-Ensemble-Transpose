@@ -1,6 +1,6 @@
 # MPI Ensemble Transpose Benchmark
 
-A small C/MPI benchmark that reproduces the "transpose" at the heart of ensemble data assimilation (as in NSF NCAR's DART): switching a set of ensemble members between two distributed layouts, and measuring which communication strategy scales best.
+A small C++/MPI benchmark that reproduces the "transpose" at the heart of ensemble data assimilation (as in NSF NCAR's DART): switching a set of ensemble members between two distributed layouts, and measuring which communication strategy scales best.
 
 > Status: scaffolding only. No implementation yet.
 
@@ -12,6 +12,10 @@ An ensemble of N model states (each a vector of S doubles) is spread across P MP
 - **State-major:** each rank holds a slice of the state vector across every member.
 
 Switching layouts is an all-to-all exchange. This project builds it several ways and compares them.
+
+## Language
+
+Written in modern C++ (C++20), built with `mpicxx`. MPI has no maintained C++ bindings (they were removed in MPI-3), so the code calls the standard C API and wraps it in small C++ helpers: RAII types that free communicators and datatypes automatically, `std::vector` for buffers instead of `malloc`, and `std::span` to pass views of them around.
 
 ## Planned strategies
 
@@ -33,8 +37,8 @@ Metrics: wall time (median of 10+ runs, max across ranks), effective bandwidth, 
 ## Layout
 
 ```
-src/        transpose implementations and benchmark driver
-include/    shared headers
+src/        transpose implementations and benchmark driver (.cpp)
+include/    shared headers (.hpp)
 tests/      correctness tests (uneven N, S, P included)
 scripts/    Slurm job scripts for the experiments
 analysis/   Python scripts that turn CSVs into plots
@@ -47,14 +51,14 @@ docs/       project scope and notes
 Not yet implemented. Intended usage:
 
 ```
-make            # build with mpicc
+make            # build with mpicxx (C++20)
 make test       # run correctness tests
 sbatch scripts/<experiment>.sbatch
 ```
 
 ## Roadmap
 
-- [ ] Data model + deterministic fill + correctness check
+- [x] Data model + deterministic fill + correctness check
 - [ ] Strategy A (Alltoallv)
 - [ ] Strategy B (Isend/Irecv)
 - [ ] Strategy C (derived datatypes)

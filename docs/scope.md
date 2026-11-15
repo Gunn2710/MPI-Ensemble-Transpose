@@ -1,6 +1,6 @@
 # Project scope
 
-Full scope lives in the shared doc: MPI Ensemble Transpose Benchmark - Project Scope. Key points below.
+Full scope lives in the shared doc: MPI Ensemble Transpose Benchmark - Project Scope. Key points below. The shared doc still says C; this file is current: the project is in C++.
 
 ## Goals
 
@@ -14,17 +14,7 @@ Full scope lives in the shared doc: MPI Ensemble Transpose Benchmark - Project S
 - No data assimilation math (synthetic state arrays).
 - No GPU code in the core project.
 - No attempt to match DART's real performance numbers.
-
-## Timeline (target)
-
-| Phase | Dates |
-| --- | --- |
-| Setup, strategy A, tests | Nov 12 - Nov 22 |
-| Strategies B and C | Nov 23 - Dec 6 |
-| Finals (light work only) | Dec 7 - Dec 20 |
-| Cluster runs + IO stretch | Dec 21 - Jan 3 |
-| Plots, README, statement | Jan 4 - Jan 12 |
-| SIParCS application deadline | Jan 19, 2027 |
+- No C++ for its own sake: no heavy templates or class hierarchies, and no libraries beyond MPI and the standard library (Boost.MPI included).
 
 ## Scope cuts if time runs short
 
